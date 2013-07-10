@@ -3,7 +3,7 @@ server:
 
 prodf:
 	git push heroku master
-	heroku config:set NODE_ENV=production --account suprizr-web
+	heroku config:set SP_ENV=production --account suprizr-web
 
 prod:
 	make prodf
