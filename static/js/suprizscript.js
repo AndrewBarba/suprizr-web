@@ -110,194 +110,6 @@
         }
     }
 
-    /********* HELPERS *********/
-    /***************************/
-
-    defined = function(x) { return (x in window); } // is something defined
-    trace = function(t,f) { if (($INTERNAL || f) && defined("console")) console.log(t); } // log to console
-    SP.equal = function(sp1,sp2) { return sp1 && sp2 && (sp1._id == sp2._id) && sp1._id; } // are two sp objects equal?
-    SP.s4 = function(){return (((1+Math.random())*0x10000)|0).toString(16).substring(1); } // random 4 digit string/number
-    SP.guid = function(){return(SP.s4()+SP.s4()+"-"+SP.s4()+"-4"+SP.s4().substr(0,3)+"-"+SP.s4()+"-"+SP.s4()+SP.s4()+SP.s4()).toLowerCase();} // guid generator
-    SP.date = function(){return new Date();}; // returns a date
-    SP.date.diaryDate = function(days) { // returns a diary diate. (A day that starts at 4am or the previous day)
-        var today = SP.parseDiaryDate(SP.diaryDate());
-        today.setHours(4);
-        today.setDate(today.getDate()+days);
-        return today;
-    }
-    SP.diaryDate = function(d){ // produces a human readable diary date string, not a date object
-        var date = d ? d : new Date();
-        var y = date.getFullYear();
-        var m = (date.getMonth()+1);
-        var m = m < 10 ? "0"+m : m+""; 
-        var d = date.getDate();
-        d = d < 10 ? "0"+d : d+"";
-        return y + "-" +  m + "-" + d;
-    }
-    SP.redirect = function(path) { // redirect the page or # to reload the current. adds timeout to give cookie time to store. we do this a lot
-        if (path) {
-            setTimeout(function(){
-                if (path == "#") {
-                    location.reload();
-                } else {
-                    window.location = path;
-                }
-            },100);
-        }
-    }
-    SP.dateString = function(date) { // returns a nicely formatted date string
-        return (date.getMonth()+1) + "." + date.getDate() + "." + date.getFullYear();
-    }
-    SP.prettyDateString = function() {
-        // nothing for now
-    }
-    SP.relativeTime = function(date) { // returns a string that nicely portrays relative time since a given date
-        var now = new Date();
-        var nowSeconds = now.getTime() / 1000;
-        var dateSeconds = date.getTime() / 1000;
-        var diff = Math.ceil(nowSeconds - dateSeconds);
-        var tense;
-        if (diff < 60) {
-            return "just now";
-        } else if (diff < 60*60) {
-            tense = "minute";
-            diff = Math.floor(diff/60);
-        } else if (diff < 60*60*24) {
-            tense = "hour";
-            diff = Math.floor(diff/60/60);
-        } else if (diff < 60*60*24*7) {
-            tense = "day";
-            diff = Math.floor(diff/60/60/24);
-            if (diff == 1) return "yesterday";
-            if (diff < 7) return SP.dayOfWeek(date);
-        } else {
-            return SP.dateString(date);
-        }
-        if (diff != 1) tense += "s";
-        return diff + " " + tense + " ago";
-    }
-    SP.dayOfWeek = function(date) { // returns the english day of week for the given date
-        switch(date.getDay()) {
-            case 0: return "Sunday";
-            case 1: return "Monday";
-            case 2: return "Tuesday";
-            case 3: return "Wednesday";
-            case 4: return "Thursday";
-            case 5: return "Friday";
-            case 6: return "Saturday";
-        }
-        return "";
-    }
-    SP.monthString = function(date) { // returns the english month for the given date
-        switch(date.getMonth()) {
-            case 0: return "January";
-            case 1: return "February";
-            case 2: return "March";
-            case 3: return "April";
-            case 4: return "May";
-            case 5: return "June";
-            case 6: return "July";
-            case 7: return "August";
-            case 8: return "September";
-            case 9: return "October";
-            case 10: return "November";
-            case 11: return "December";
-        }
-        return "";
-    }
-    SP.parseDiaryDate = function(d) { // parses a date in the format YYYY-MM-DD ex: 2013-05-01
-        if (d && d != "") {
-            var parts = d.match(/(\d+)/g);
-            return new Date(parts[0], parts[1]-1, parts[2]);
-        } else {
-            return false;
-        }
-    }
-    SP.parseDateInputString = function(s) { // this function parses dates in the format "2013-06-11T01:00"
-        var date = false;
-        var parts = s.split("T");
-        if (parts.length > 0) {
-            date = SP.parseDiaryDate(parts[0]);
-        }
-        if (date && parts.length > 1) {
-            var time = parts[1].split(":");
-            date.setHours(time[0]);
-            date.setMinutes(time[1]);
-        }
-        return date;
-    }
-    SP.dateToInputDateString = function(date) {
-        var s = SP.diaryDate(date) + "T";
-        
-        var hours = date.getHours();
-        if (hours < 10) hours = "0" + hours;
-        s += hours + ":";
-        
-        var min = date.getMinutes();
-        if (min < 10) min = "0" + min;
-        s += min;
-
-        return s;
-    }
-    SP.secondsToFullDateString = function(d) {
-        var date = new Date(d*1000);
-        var s = (date.getMonth()+1) + "/" + date.getDate() + "/" + date.getFullYear()
-
-        var h = date.getHours();
-        var a = h > 12 ? "pm" : "am";
-        if (h > 12) h -= 12;
-        if (h == 0) h = 12;
-
-        var m = date.getMinutes();
-        if (m < 10) m = "0" + m;
-        return s + " " + h + ":" + m + a;
-    }
-    SP.isEmail = function(email) { // is the given string a valid email address
-        var filter = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        return filter.test(email);
-    }
-    SP.isIE9 = function(){return navigator.userAgent.indexOf("MSIE") != -1;} // is the current browser ie9?
-    SP.randomElement = function(array) { // grab a random element from an array
-        return array[Math.floor(Math.random()*array.length)];
-    }
-    SP.isMobile = function() { // is the current browser a mobile device (at least a popular mobile device)
-        return (/iphone|ipod|ipad|android|blackberry|fennec/).test(navigator.userAgent.toLowerCase());
-    }
-    SP.isiOS = function() {
-        return (/iphone|ipod|ipad/).test(navigator.userAgent.toLowerCase());
-    }
-    SP.isAndroid = function() {
-        return (/android/).test(navigator.userAgent.toLowerCase());
-    }
-    SP.trackTime = function(date) { // prints/returns time difference (seconds) between now and a given date
-        var seconds = ((new Date()).getTime()/1000) - (date.getTime()/1000);
-        return seconds;
-    }
-    SP.each = function(arr,fnc) { // a simple for-each implementation
-        for (var k in arr) {
-            var obj = arr[k];
-            fnc.call(obj,k,obj);
-        }
-    }
-    SP.extend = function(a,b,f) { // combines second dict into first dict and returns it. if third param is true, b keys overright a keys
-        if (a) {
-            SP.each(b,function(k,v){
-                if (v && (!a[k] || f)) a[k] = v;
-            });
-            return a;
-        } else {
-            return b;
-        }
-    }
-    SP.grep = function(arr,fnc) { // filters an array according to a given function
-        var newarr = [];
-        SP.each(arr,function(k,v){
-            var pass = fnc.call(v,v,k);
-            if (pass) newarr.push(v);
-        });
-        return newarr;
-    }
-
     /********* API SERVICE *********/
     SP.api = function(){}
     var $_api_ok = true;
@@ -314,11 +126,11 @@
     }
 
     SP.api.status = function(callback) {
-        SP.client.GET("/status",false,function(data,status){
-            var ok = (status == "success") && (data.status == "OK");
+        SP.client.GET("/status",false,function(err, data){
+            var ok = (!err) && (data.status == "OK");
             $_api_ok = ok;
             SP.event.post("SP.api.status.updated",ok);
-            if (callback) callback(ok);
+            if (callback) callback(null, ok);
         });
         return $_api_ok;
     }
@@ -546,11 +358,11 @@
      * and any copies of the user in memory
      */
     SP.user.fetchCurrent = function(callback) {
-        SP.client.GET("/user", {}, function(user,status){
-            if (status == "success") {
+        SP.client.GET("/user", {}, function(err, user){
+            if (!err) {
                 SP.user._update(user,callback);
             } else {
-                if (callback) callback();
+                if (callback) callback(err);
             }
         });
     }
@@ -559,13 +371,7 @@
      * Fetch a user by _id
      */
     SP.user.fetch = function(uid,callback) {
-        SP.client.GET("/user/"+uid, {}, function(user,status){
-            if (status == "success") {
-                if (callback) callback(user);
-            } else {
-                if (callback) callback();
-            }
-        });
+        SP.client.GET("/user/"+uid, {}, callback);
     }
 
     /**
@@ -587,11 +393,11 @@
             if (callback) callback();
             return;
         }
-        SP.client.PUT("/user/",data,function(user,status){
-            if (status == "success") {
+        SP.client.PUT("/user/",data,function(err, user){
+            if (!err) {
                 SP.user._update(user, callback);
             } else {
-                if (callback) callback();
+                if (callback) callback(err);
             }
         });
     }
@@ -602,7 +408,7 @@
     SP.user._update = function(user,callback) {
         $SP_USER = user;
         SP.storage.set("sp_user",SP.user.simpleUser(user));
-        if (callback) callback(user);
+        if (callback) callback(null, user);
         SP.event.post("SP.user.updated",user);
     }
 
@@ -634,7 +440,7 @@
             if ($SP_USER || user) {
                 SP.user._update(user, callback);
             } else {
-                if (callback) callback($SP_USER);
+                if (callback) callback(null, $SP_USER);
             }
             return SP.auth();
         } else {
@@ -673,14 +479,14 @@
      */
     SP.auth.login = function (email, password, callback) {
         var data = { "email":email, "password":password };
-        SP.client.POST("/auth/login", data, function(data,status){
-             if (status == "success") {
+        SP.client.POST("/auth/login", data, function(err, data){
+             if (!err) {
                  SP.track.event("Login - Email - Complete",SP.user.simpleUser(data.user));
                  var token = data.auth_token;
                  SP.auth(token, data.user, callback);
              } else {
                  SP.track.event("Login - Email - Failed");
-                 if (callback) callback();
+                 if (callback) callback(err);
              }
         });
     }
@@ -693,8 +499,8 @@
         SP.facebook.login(function(fbtoken,response){
             if (fbtoken) {
                 var data = { "facebook_auth_token" : fbtoken };
-                SP.client.POST("/auth/facebook", data, function(data,status){
-                     if (status == "success") {
+                SP.client.POST("/auth/facebook", data, function(err, data){
+                     if (!err) {
                         SP.track.event("Login - Facebook - Complete",SP.user.simpleUser(data.user));
                         SP.facebook(fbtoken);
                         var token = data.auth_token;
@@ -704,7 +510,7 @@
                      }
                 });
             } else {
-                if (callback) callback();
+                if (callback) callback(err);
             }
         });
     }
@@ -715,14 +521,14 @@
      * Automatically fetches the new user object, clears all previous tokens and caches, and caches new data
      */
     SP.auth.register = function(data, callback) {
-        SP.client.POST("/auth/register", data, function(data,status){
-             if (status == "success") {
+        SP.client.POST("/auth/register", data, function(err, data){
+             if (!err) {
                  SP.track.event("Registration - Complete",SP.user.simpleUser(data.user));
                  var token = data.auth_token;
                  SP.auth(token, data.user, callback);
              } else {
                  SP.track.event("Registration - Failed");
-                 if (callback) callback();
+                 if (callback) callback(err);
              }
         });
     }
@@ -742,13 +548,7 @@
      * TODO: Implement this on the server
      */
     SP.auth.resetPassword = function (email,callback) {
-        SP.client.DELETE("/auth/password",{"email":email},function(data,status){
-            if (status == "success") {
-                if (callback) callback(true);
-            } else {
-                if (callback) callback();
-            }
-        });
+        SP.client.DELETE("/auth/password", {"email":email}, callback);
     }
 
     /**
@@ -756,12 +556,12 @@
      */
     SP.auth.changePassword = function(to,from,callback) {
         var data = {"password":to, "old_password":from, "client":SP.guid() };
-        SP.client.PUT("/auth/password",data,function(data,status){
-            if (status == "success") {
+        SP.client.PUT("/auth/password",data,function(err, data){
+            if (!err) {
                 var token = data.auth_token;
                 SP.auth(token, data.user, callback);
             } else {
-                if (callback) callback();
+                if (callback) callback(err);
             }
         });
     }
@@ -777,6 +577,66 @@
         $FB_AUTH = false;
         $SP_USER = false;
         SP.event.post("SP.auth.changed",$SP_AUTH);
+    }
+
+    /************** RESTAURANT ************/
+    SP.restaurant = function(){}
+    /**************************************/
+
+    SP.restaurant.fetchAll = function(callback) {
+        SP.client.GET("/restaurant", {}, function(err, data){
+            if (!err) {
+                if (callback) callback(null, data.restaurants);
+            } else {
+                if (callback) callback(err);
+            }
+        });
+    }
+
+    SP.restaurant.fetch = function(id, callback) {
+        SP.client.GET("/restaurant/"+id, {}, callback);
+    }
+
+    SP.restaurant.update = function(id, data, callback) {
+        SP.client.PUT("/restaurant/"+id, data, callback);
+    }
+
+    SP.restaurant.create = function(data, callback) {
+        SP.client.POST("/restaurant", data, callback);
+    }
+
+    SP.restaurant.delete = function(id, callback) {
+        SP.client.DELETE("/restaurant/"+id, {}, callback);
+    }
+
+    /************** MEAL ************/
+    SP.meal = function(){}
+    /********************************/
+
+    SP.meal.fetchForRestaurant = function(restaurant, callback) {
+        SP.client.GET("/meal", {"restaurant":id}, function(err, data){
+            if (!err) {
+                if (callback) callback(null, data.meals);
+            } else {
+                if (callback) callback(err);
+            }
+        });
+    }
+
+    SP.meal.fetch = function(id, callback) {
+        SP.client.GET("/meal/"+id, {}, callback);
+    }
+
+    SP.meal.update = function(id, data, callback) {
+        SP.client.PUT("/meal/"+id, data, callback);
+    }
+
+    SP.meal.create = function(data, callback) {
+        SP.client.POST("/meal", data, callback);
+    }
+
+    SP.meal.delete = function(id, callback) {
+        SP.client.DELETE("/meal/"+id, {}, callback);
     }
 
     /******* FACEBOOK SDK *********/
@@ -1054,18 +914,25 @@
         request.success = function() {
             var text = this.responseText;
             var obj = (text.length > 0) ? JSON.parse(this.responseText) : {}; // our api only returns JSON, lets parse it
-            if (callback) this.callback.call(this,obj,"success");
+            if (callback) this.callback.call(this, null, obj);
         };
         request.fail = function() {
             trace("SP.client ERROR: "+SP.client.url(endpoint)+" - "+this.statusText,true); // damn, something went wrong. tell me about it
-            if (endpoint != "/status") {
-                SP.api.status(); // check the api status if an endpoint failed to load
-            }
-            if (this.callback) this.callback.call(this);
+            var text = this.responseText;
+            var err = null;
+            if (text.length) err = JSON.parse(this.responseText);
+            if (!err) err = { error: "Server error", message: "Something went wrong" };
+            if (this.callback) this.callback.call(this, err);
         };
         request.unauthorized = function() {
             if (SP.auth.hasAuth()) SP.event.post("SP.auth.unauthorized");
-            if (this.callback) this.callback.call(this);
+            this.fail();
+        }
+        request.serverError = function() {
+            if (endpoint != "/status") {
+                SP.api.status(); // check the api status if an endpoint failed to load
+            }
+            this.fail();
         }
         request.done = function() {
             this.complete = true; // wahoo! finished the request, track how long it took
@@ -1082,7 +949,7 @@
             };
             request.ontimeout = function() {
                 this.done();
-                this.fail();
+                this.serverError();
             };
             request.onload = function() {
                 this.done();
@@ -1103,6 +970,9 @@
                             break;
                         case 401:
                             this.unauthorized();
+                            break;
+                        case 500:
+                            this.serverError();
                             break;
                         default:
                             this.fail();
@@ -1205,6 +1075,195 @@
             mixpanel.register(data);
             mixpanel.people.set(data);
         }
+    }
+
+    /********* HELPERS *********/
+    /***************************/
+
+    defined = function(x) { return (x in window); } // is something defined
+    trace = function(t,f) { if (($INTERNAL || f) && defined("console")) console.log(t); } // log to console
+    rtrace = function(err, data, force) { trace(data, force); } // traces request callbacks easily
+    SP.equal = function(sp1,sp2) { return sp1 && sp2 && (sp1._id == sp2._id) && sp1._id; } // are two sp objects equal?
+    SP.s4 = function(){return (((1+Math.random())*0x10000)|0).toString(16).substring(1); } // random 4 digit string/number
+    SP.guid = function(){return(SP.s4()+SP.s4()+"-"+SP.s4()+"-4"+SP.s4().substr(0,3)+"-"+SP.s4()+"-"+SP.s4()+SP.s4()+SP.s4()).toLowerCase();} // guid generator
+    SP.date = function(){return new Date();}; // returns a date
+    SP.date.diaryDate = function(days) { // returns a diary diate. (A day that starts at 4am or the previous day)
+        var today = SP.parseDiaryDate(SP.diaryDate());
+        today.setHours(4);
+        today.setDate(today.getDate()+days);
+        return today;
+    }
+    SP.diaryDate = function(d){ // produces a human readable diary date string, not a date object
+        var date = d ? d : new Date();
+        var y = date.getFullYear();
+        var m = (date.getMonth()+1);
+        var m = m < 10 ? "0"+m : m+""; 
+        var d = date.getDate();
+        d = d < 10 ? "0"+d : d+"";
+        return y + "-" +  m + "-" + d;
+    }
+    SP.redirect = function(path) { // redirect the page or # to reload the current. adds timeout to give cookie time to store. we do this a lot
+        if (path) {
+            setTimeout(function(){
+                if (path == "#") {
+                    location.reload();
+                } else {
+                    window.location = path;
+                }
+            },100);
+        }
+    }
+    SP.dateString = function(date) { // returns a nicely formatted date string
+        return (date.getMonth()+1) + "." + date.getDate() + "." + date.getFullYear();
+    }
+    SP.prettyDateString = function() {
+        // nothing for now
+    }
+    SP.relativeTime = function(date) { // returns a string that nicely portrays relative time since a given date
+        var now = new Date();
+        var nowSeconds = now.getTime() / 1000;
+        var dateSeconds = date.getTime() / 1000;
+        var diff = Math.ceil(nowSeconds - dateSeconds);
+        var tense;
+        if (diff < 60) {
+            return "just now";
+        } else if (diff < 60*60) {
+            tense = "minute";
+            diff = Math.floor(diff/60);
+        } else if (diff < 60*60*24) {
+            tense = "hour";
+            diff = Math.floor(diff/60/60);
+        } else if (diff < 60*60*24*7) {
+            tense = "day";
+            diff = Math.floor(diff/60/60/24);
+            if (diff == 1) return "yesterday";
+            if (diff < 7) return SP.dayOfWeek(date);
+        } else {
+            return SP.dateString(date);
+        }
+        if (diff != 1) tense += "s";
+        return diff + " " + tense + " ago";
+    }
+    SP.dayOfWeek = function(date) { // returns the english day of week for the given date
+        switch(date.getDay()) {
+            case 0: return "Sunday";
+            case 1: return "Monday";
+            case 2: return "Tuesday";
+            case 3: return "Wednesday";
+            case 4: return "Thursday";
+            case 5: return "Friday";
+            case 6: return "Saturday";
+        }
+        return "";
+    }
+    SP.monthString = function(date) { // returns the english month for the given date
+        switch(date.getMonth()) {
+            case 0: return "January";
+            case 1: return "February";
+            case 2: return "March";
+            case 3: return "April";
+            case 4: return "May";
+            case 5: return "June";
+            case 6: return "July";
+            case 7: return "August";
+            case 8: return "September";
+            case 9: return "October";
+            case 10: return "November";
+            case 11: return "December";
+        }
+        return "";
+    }
+    SP.parseDiaryDate = function(d) { // parses a date in the format YYYY-MM-DD ex: 2013-05-01
+        if (d && d != "") {
+            var parts = d.match(/(\d+)/g);
+            return new Date(parts[0], parts[1]-1, parts[2]);
+        } else {
+            return false;
+        }
+    }
+    SP.parseDateInputString = function(s) { // this function parses dates in the format "2013-06-11T01:00"
+        var date = false;
+        var parts = s.split("T");
+        if (parts.length > 0) {
+            date = SP.parseDiaryDate(parts[0]);
+        }
+        if (date && parts.length > 1) {
+            var time = parts[1].split(":");
+            date.setHours(time[0]);
+            date.setMinutes(time[1]);
+        }
+        return date;
+    }
+    SP.dateToInputDateString = function(date) {
+        var s = SP.diaryDate(date) + "T";
+        
+        var hours = date.getHours();
+        if (hours < 10) hours = "0" + hours;
+        s += hours + ":";
+        
+        var min = date.getMinutes();
+        if (min < 10) min = "0" + min;
+        s += min;
+
+        return s;
+    }
+    SP.secondsToFullDateString = function(d) {
+        var date = new Date(d*1000);
+        var s = (date.getMonth()+1) + "/" + date.getDate() + "/" + date.getFullYear()
+
+        var h = date.getHours();
+        var a = h > 12 ? "pm" : "am";
+        if (h > 12) h -= 12;
+        if (h == 0) h = 12;
+
+        var m = date.getMinutes();
+        if (m < 10) m = "0" + m;
+        return s + " " + h + ":" + m + a;
+    }
+    SP.isEmail = function(email) { // is the given string a valid email address
+        var filter = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        return filter.test(email);
+    }
+    SP.isIE9 = function(){return navigator.userAgent.indexOf("MSIE") != -1;} // is the current browser ie9?
+    SP.randomElement = function(array) { // grab a random element from an array
+        return array[Math.floor(Math.random()*array.length)];
+    }
+    SP.isMobile = function() { // is the current browser a mobile device (at least a popular mobile device)
+        return (/iphone|ipod|ipad|android|blackberry|fennec/).test(navigator.userAgent.toLowerCase());
+    }
+    SP.isiOS = function() {
+        return (/iphone|ipod|ipad/).test(navigator.userAgent.toLowerCase());
+    }
+    SP.isAndroid = function() {
+        return (/android/).test(navigator.userAgent.toLowerCase());
+    }
+    SP.trackTime = function(date) { // prints/returns time difference (seconds) between now and a given date
+        var seconds = ((new Date()).getTime()/1000) - (date.getTime()/1000);
+        return seconds;
+    }
+    SP.each = function(arr,fnc) { // a simple for-each implementation
+        for (var k in arr) {
+            var obj = arr[k];
+            fnc.call(obj,k,obj);
+        }
+    }
+    SP.extend = function(a,b,f) { // combines second dict into first dict and returns it. if third param is true, b keys overright a keys
+        if (a) {
+            SP.each(b,function(k,v){
+                if (v && (!a[k] || f)) a[k] = v;
+            });
+            return a;
+        } else {
+            return b;
+        }
+    }
+    SP.grep = function(arr,fnc) { // filters an array according to a given function
+        var newarr = [];
+        SP.each(arr,function(k,v){
+            var pass = fnc.call(v,v,k);
+            if (pass) newarr.push(v);
+        });
+        return newarr;
     }
 
     /************ SDK LOADED ************/
