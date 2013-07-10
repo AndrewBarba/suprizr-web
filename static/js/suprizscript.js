@@ -1265,6 +1265,18 @@
         });
         return newarr;
     }
+    SP.removeLastChar = function(string, char) { // removes last char if it equals given char
+        if (string.charAt(string.length-1) == char) {
+            return string.slice(0, -1);
+        }
+        return string;
+    }
+    SP.removeFirstChar = function(string, char) { // removes first char if it equals given char
+        if (string.charAt(0) == char) {
+            return string.slice(1);
+        }
+        return string;
+    }
 
     /************ SDK LOADED ************/
     /************************************/
