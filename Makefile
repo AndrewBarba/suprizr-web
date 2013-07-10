@@ -1,5 +1,5 @@
 server:
-	foreman start
+	source venv/bin/activate; foreman start;
 
 prodf:
 	git push heroku master
