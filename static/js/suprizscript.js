@@ -23,7 +23,7 @@
     /*****************************/
 
     var $SP_HOST       = window.location.host;
-    var $INTERNAL      = false; // internal uses api.suprizrqa.com and is verbose
+    var $INTERNAL      = false; // internal uses localhost:8888 and is verbose
     var $LOCAL_API     = false; // this tells happyscript to use localhost:8888 as the api server
     var $SP_AUTH       = false; // suprizr auth token
     var $FB_AUTH       = false; // facebook auth token
@@ -632,7 +632,7 @@
             SP.cookie.set("sp_auth",auth,999);
             SP.event.post("SP.auth.changed",auth);
             if ($SP_USER || user) {
-                SP.user._update(user, callback));
+                SP.user._update(user, callback);
             } else {
                 if (callback) callback($SP_USER);
             }
@@ -986,9 +986,9 @@
      */
     SP.client.host = function() {
         if ($INTERNAL) {
-            return $LOCAL_API ? "http://localhost:8888" : "https://api.suprizrqa.com";
+            return "//localhost:5000";
         } else {
-            return "https://api.suprizr.com";
+            return "//api.suprizr.com";
         }
     }
 
@@ -1048,6 +1048,7 @@
         request.timeout = timeout;
         request.start = new Date(); // set a start date so we can track how long the request took
         request.complete = false; // nope, not done yet
+        request.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
 
         // Setup callbacks
         request.success = function() {

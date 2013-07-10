@@ -1,9 +1,9 @@
 server:
-	source venv/bin/activate; foreman start;
+	source venv/bin/activate; python app.py;
 
 prodf:
 	git push heroku master
-	heroku config:set SP_ENV=production --account suprizr-web
+	heroku config:add SP_ENV=production REL=$(heroku releases --account suprizr-web | head -2 | tail -1 | awk '{print $1}') --account suprizr-web
 
 prod:
 	make prodf
