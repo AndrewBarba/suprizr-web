@@ -70,6 +70,21 @@
 <script>
 $(function(){
 
+	SP(function(user){
+		if (user && user.facebook) {
+			$("#facebook-connect").hide();
+		} else {
+			$("#facebook-connect").touchClick(function(){
+				SP.auth.login.facebook(function(err, user){
+					if (!err) {
+						if (!user.admin) alert("Hey "+user.first_name+"! You're offically a Suprizr user. Andrew will mark you as an admin user as soon as possible!");
+						SP.redirect("/admin/restaurants");
+					}
+				});
+			});
+		}
+	});
+
 	var scope = $("#page-restaurants");
 
 	var restaurants = [];

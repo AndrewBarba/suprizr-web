@@ -417,7 +417,7 @@
      * Theres a lot of junk on the user object i dont want
      */
     SP.user.simpleUser = function(user) {
-        var keys = ["_id","first_name","last_name","email","created_at","gender","admin"];
+        var keys = ["_id","first_name","last_name","email","created_at","gender","facebook","admin"];
         var u = {};
         SP.each(keys, function(index,key){
             var val = user[key];
@@ -501,10 +501,16 @@
                 var data = { "facebook_auth_token" : fbtoken };
                 SP.client.POST("/auth/facebook", data, function(err, data){
                      if (!err) {
-                        SP.track.event("Login - Facebook - Complete",SP.user.simpleUser(data.user));
-                        SP.facebook(fbtoken);
-                        var token = data.auth_token;
-                        SP.auth(token, data.user, callback);
+                        if (!SP.auth.hasAuth()) {
+                            SP.track.event("Login - Facebook - Complete",SP.user.simpleUser(data.user));
+                            SP.facebook(fbtoken);
+                            var token = data.auth_token;
+                            SP.auth(token, data.user, callback);
+                        } else {
+                            if ($SP_USER._id == data._id) {
+                                $SP_USER = data;
+                            }
+                        }
                      } else {
                         if (callback) callback();
                      }
@@ -692,10 +698,9 @@
             SP.event.post("SP.facebook.loaded");
             if (response.status == "connected") {
                 var token = response.authResponse.accessToken;
-                if ($SP_USER && response.authResponse.userID == $SP_USER.facebook_id) {
+                if ($SP_USER && response.authResponse.userID == $SP_USER.facebook.id) {
                     trace("Connected to facebook");
                     SP.facebook(token);
-                    SP.user.putData({"fb_auth":token});
                 } else if (!$SP_USER) {
                     trace("Signed into facebook, logged out of suprizr");
                 } else {
