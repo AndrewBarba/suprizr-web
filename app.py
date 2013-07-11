@@ -8,7 +8,7 @@ def random_string(size=6, chars=string.ascii_uppercase + string.digits):
     return ''.join(random.choice(chars) for x in range(size))
 
 def render(temp):
-	return render_template(temp, version=os.environ.get('SP_ENV',random_string()))
+	return render_template(temp, version=os.environ.get('REL',random_string()))
 
 @app.route('/')
 def hello():
