@@ -8,5 +8,8 @@ prodf:
 prod:
 	make prodf
 
+vars:
+	heroku config:add SP_ENV=production REL=$$(heroku releases --account suprizr-web | head -2 | tail -1 | awk '{print $1}') --account suprizr-web
+
 logs:
 	heroku logs --tail --account suprizr-web
