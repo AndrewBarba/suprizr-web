@@ -14,9 +14,9 @@ def render(temp):
 def hello():
     return 'Hello Suprizr!'
 
-@app.route('/admin/')
-@app.route('/admin')
-def admin():
+@app.route('/admin', defaults={'path': ''})
+@app.route('/admin/<path:path>')
+def admin(path=None):
 	return render("admin/pages/index.html")
 
 def _cache(cache,response,time=False):

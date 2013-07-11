@@ -1,5 +1,7 @@
 $(function(){
-    SP.history.init();
+    setTimeout(function(){
+        SP.history.init();
+    });
 });
 
 (function(){
@@ -31,7 +33,6 @@ $(function(){
         function triggerKey(key, val) {
             var css_sel = key.replace(/\//g,"-"); // cant have slashes in css selector sadly :(
             var css_sel = css_sel.replace(/\*/g,"0"); // cant have * in css selector sadly :(
-            trace(css_sel);
             $("."+css_sel).show();
             var callbacks = $_history[key];
             if (callbacks) {

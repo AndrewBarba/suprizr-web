@@ -1,0 +1,16 @@
+{% raw %}
+
+<script id="template-restaurant-list" type="text/x-handlebars-template">
+    <div class="restaurants">
+        {{#each restaurants }}
+            <div class="restaurant" data-id="{{ this._id }}">
+            	<div class="name">{{ this.name }}</div>
+            	<div class="address">{{ this.description }}</div>
+            </div>
+        {{/each}}
+    </div>
+</script>
+
+
+
+{% endraw %}

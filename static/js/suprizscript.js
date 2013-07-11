@@ -602,7 +602,14 @@
     }
 
     SP.restaurant.create = function(data, callback) {
-        SP.client.POST("/restaurant", data, callback);
+        SP.client.POST("/restaurant", data, function(err, doc){
+            if (!err) {
+                SP.event.post("SP.restaurant.create", doc);
+                if (callback) callback(null, doc);
+            } else {
+                if (callback) callback(err);
+            }
+        });
     }
 
     SP.restaurant.delete = function(id, callback) {
@@ -675,7 +682,7 @@
     SP.facebook.init = function() {
         FB.init({
             appId      : "285543038247615", // App ID
-            channelUrl : "//www.suprizr.com/static/facebook/channel.html", // Channel File
+            channelUrl : "//app.suprizr.com/static/facebook/channel.html", // Channel File
             status     : true, // check login status
             cookie     : true, // enable cookies to allow the server to access the session
             xfbml      : true, // parse XFBML
