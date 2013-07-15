@@ -60,10 +60,12 @@ $(function(){
 	var service = new google.maps.places.PlacesService($("#google-results")[0]);
 	function placeSearch() {
 		var query = $("#google-search",scope).val().trim();
-		service.textSearch({ "query": query }, function(data){
-			var html = SP.ui.template("google-restaurant-list",{"data":data});
-			$("#google-results",scope).html(html);
-		});
+		if (query) {
+			service.textSearch({ "query": query }, function(data){
+				var html = SP.ui.template("google-restaurant-list",{"data":data});
+				$("#google-results",scope).html(html);
+			});
+		}
 	}
 
 	$("#google-search",scope).keyup(placeSearch);
