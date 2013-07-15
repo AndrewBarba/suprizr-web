@@ -17,6 +17,8 @@
 	cursor: pointer;
 }
 
+clear { display: block; clear: both; }
+
 @greenColor: #49ba6f;
 
 sp {
@@ -274,10 +276,13 @@ html, body { height: 100% !important; padding: 0 !important; }
 
 #single-restaurant {
 	padding: 10px;
-	.top-bar {
+	.section {
 		background-color: #fff;
 		box-shadow: 0 0 1px #999;
 		padding: 10px;
+		margin-bottom: 10px;
+	}
+	.top-bar {
 		.info {
 			float: left;
 			.name {
@@ -293,6 +298,62 @@ html, body { height: 100% !important; padding: 0 !important; }
 			float: right;
 		}
 	}
+	#new-meal {
+		.info {
+			font-weight: bold;
+			height: 40px;
+			button {
+				float: right;
+			}
+		}
+	}
+
+	.meals {
+		.meal-container {
+			float: left;
+			width: (100% / 3);
+			padding: 5px;
+			.box-size;
+			.meal {
+				background-color: #fff;
+				box-shadow: 0 0 1px #999;
+				padding: 10px;
+
+				input, textarea {
+					width: 100%;
+					.box-size;
+				}
+
+			}
+		}
+	}
+}
+
+input[type="text"] {
+	.box-size;
+	min-height: 30px;
+	width: 100%;
+}
+
+input[type="range"]
+{
+    -webkit-appearance: none !important;
+    background: #cecece;
+    height: 2px !important;
+    -webkit-transform: translate3d(0px, 0px, 0px);
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+input::-webkit-slider-thumb
+{
+    -webkit-appearance: none !important;
+    background: #666;
+    height: 15px;
+    width: 15px;
+    cursor: pointer;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
 }
 
 

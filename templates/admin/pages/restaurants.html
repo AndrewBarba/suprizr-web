@@ -17,7 +17,7 @@
 		<div class="content">
 			<div id="single-restaurant" class="history -admin-restaurants-0">
 			
-				<div class="top-bar clearfix">
+				<div class="top-bar clearfix section">
 					<div class="info">
 						<div class="name"></div>
 						<div class="address"></div>
@@ -26,7 +26,23 @@
 						<!-- <button class="btn btn-primary">edit</button> -->
 						<button id="delete-restaurant" class="btn btn-danger">delete</button>
 					</div>
-				</div>					
+				</div>	
+
+				<div class="meals">
+					<div class="meal-container">
+						<div id="new-meal" class="meal">
+							<form>
+								<fieldset>
+									<input type="text" placeholder="new meal" />
+									<textarea rows="3" id="description" placeholder="description..."></textarea>
+									<input type="text" placeholder="$9.95" />
+									<input type="range"  min="0" max="100" value="50" />
+								</fieldset>
+							</form>
+						</div>
+					</div>
+
+				</div>		
 
 			</div>
 		</div>
