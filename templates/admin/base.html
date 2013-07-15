@@ -8,11 +8,12 @@
 	<body>
 		<div id="fb-root"></div>
 		<div class="header">
-			<div class="logo">Suprizr</div>
+			<div class="logo link" data-path="/admin">Suprizr</div>
 			<button class="btn btn-primary" id="facebook-connect">Connect with Facebook</button>
 		</div>
 			
 		<!-- PAGES -->
+		{% include "admin/pages/admin.html" %}
 		{% include "admin/pages/restaurants.html" %}
 		
 

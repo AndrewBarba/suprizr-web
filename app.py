@@ -17,7 +17,7 @@ def hello():
 @app.route('/admin', defaults={'path': ''})
 @app.route('/admin/<path:path>')
 def admin(path=None):
-	return render("admin/pages/index.html")
+	return render("admin/base.html")
 
 def _cache(cache,response,time=False):
     if (cache):

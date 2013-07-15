@@ -111,16 +111,21 @@ $(function(){
 				"location" : [ lat, lon ]
 			}
 		}
-		SP.restaurant.create(data, function(err, doc){
+		if (lat && lon) {
+			SP.restaurant.create(data, function(err, doc){
+				_loading = false;
+				if (!err) {
+					SP.history.loadPath("/admin/restaurants/"+doc._id);
+					$("input,textarea",scope).val("");
+					$("#new-restaurant").fadeOut(150, reset);
+				} else {
+					alert("Somthing went wrong: "+err);
+				}
+			});
+		} else {
 			_loading = false;
-			if (!err) {
-				SP.history.loadPath("/admin/restaurants/"+doc._id);
-				$("input,textarea",scope).val("");
-				$("#new-restaurant").fadeOut(150, reset);
-			} else {
-				alert("Somthing went wrong: "+err);
-			}
-		});
+			alert("You must select a restaurant from the google search results.");
+		}
 	});
 
 	function reset() {

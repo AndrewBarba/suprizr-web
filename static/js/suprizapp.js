@@ -42,6 +42,7 @@ $(function(){
             }
         }
 
+        // show proper divs
         path = SP.removeLastChar(path, "/");
         triggerKey(path);
         var parts = path.split("/");
@@ -54,6 +55,15 @@ $(function(){
                 triggerKey(key, part);
             }
         });
+
+        SP.history.dealloc();
+    }
+
+    SP.history.dealloc = function() {
+        // dealloc old divs and values
+        var old = $(".dealloc");
+        old.html("");
+        old.val(""); 
     }
 
     var $_shouldPop = false;
