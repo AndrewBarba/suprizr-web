@@ -11,6 +11,17 @@
     </div>
 </script>
 
+<script id="template-google-restaurant-list" type="text/x-handlebars-template">
+    <div class="google-results">
+        {{#each data }}
+            <div class="google-restaurant" data-name="{{ this.name }}" data-address="{{ this.formatted_address }}" data-lat="{{ this.geometry.location.jb }}" data-lon="{{ this.geometry.location.kb }}">
+            	<div class="name">{{ this.name }}</div>
+            	<div class="address">{{ this.formatted_address }}</div>
+            </div>
+        {{/each}}
+    </div>
+</script>
+
 
 
 {% endraw %}

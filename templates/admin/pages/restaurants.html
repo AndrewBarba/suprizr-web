@@ -18,51 +18,7 @@
 			
 		</div>
 
-		<div id="new-restaurant" style="display: none;">
-			<div class="new-toolbar">
-				<button id="close-button" class="btn"><i class="icon-remove"></i></button>
-				<div class="title">Create a Restaurant</div>
-				<button id="create-button" class="btn btn-success"><i class="icon-ok icon-white"></i></button>
-			</div>
-			<div class="data-form">
-				<form id="create-restaurant">
-					<fieldset>
-						<input id="name" type="text" placeholder="name" />
-						<textarea rows="5" id="description" placeholder="description..."></textarea>
-
-						<sp></sp>
-						
-						<div class="row-fluid">
-							<div class="span6">
-								<label>delivery fee</label>
-								<input id="delivery-fee" type="text" placeholder="$6.50" />
-							</div>
-							<div class="span6">
-								<label>delivery hours</label>
-								<input id="hours" type="text" placeholder="8.00 - 18.50" />
-							</div>
-						</div>
-
-						<div class="row-fluid">
-							<div class="span4">
-								<label>delivery radius (miles)</label>
-								<input id="radius" type="text" placeholder="2.5" />
-							</div>
-							<div class="span8">
-								<label>delivery zipcodes</label>
-								<input id="zipcodes" type="text" placeholder="02120, 02110, 12345" />
-							</div>
-						</div>
-
-						<sp></sp>
-
-						<!-- <input id="google-search" type="text" placeholder="search by name" /> -->
-
-						<div id="google-results" class="hidden"></div>
-					</fieldset>
-				</form>
-			</div>
-		</div>
+		{% include "admin/pages/create_restaurant.html" %}
 
 	</div>
 </div>
@@ -116,35 +72,7 @@ $(function(){
 
 	$("#new-restaurant-btn",scope).touchClick(function(){
 		$("#new-restaurant").fadeIn(300);
-	});
-
-	$("#close-button",scope).touchClick(function(){
-		$("#new-restaurant").fadeOut(150);
-	});
-
-	$("#create-button",scope).touchClick(function(){
-		var name = $("input#name",scope).val().trim();
-		var desc = $("textarea#description",scope).val().trim();
-		var fee = $("input#delivery-fee",scope).val().trim().replace("$","");
-		var hours = $("input#hours").val().trim().replace(/ /g,"").split("-");
-		var start = hours[0]; var end = hours[1];
-		var radius = $("input#radius").val().trim();
-		var zips = $("input#zipcodes").val().trim().replace(/ /g,"").split(",");
-		var data = {
-			"name" : name,
-			"description" : desc,
-			"delivery_fee" : fee,
-			"radius" : radius,
-			"delivery_zipcodes" : zips,
-			"delivery_hours" : { "start":start, "end":end }
-		}
-		SP.restaurant.create(data, function(err, doc){
-			if (!err) {
-				SP.history.loadPath("/admin/restaurants/"+doc._id);
-				$("input,textarea",scope).val("");
-				$("#new-restaurant").fadeOut(150);
-			}
-		});
+		$("#google-search",scope).focus();
 	});
 
 	function refresh(animate) {
@@ -161,17 +89,6 @@ $(function(){
 			}
 		});
 	}
-
-	function placeSearch() {
-		var query = encodeURIComponent($("#google-search",scope).val().trim());
-		service = new google.maps.places.PlacesService($("#google-results")[0]);
-		service.textSearch({ "query": query }, function(data){
-			trace(data);
-		});
-		
-	}
-
-	$("#google-search",scope).keyup(placeSearch);
 
 	function renderRestaurants(docs) {
 		var html = SP.ui.template("restaurant-list", { restaurants: docs });
