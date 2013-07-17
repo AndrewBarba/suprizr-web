@@ -22,6 +22,54 @@
     </div>
 </script>
 
+<script id="template-meal-list" type="text/x-handlebars-template">
+    <div class="meals">
+        {{#each meals}}
+        <div class="meal-container">
+            <div class="meal">
+                <form class="save-meal" data-id="{{this._id}}">
+                    <fieldset>
+                        <input type="text" value="{{ this.name }}" id="name" placeholder="new meal" />
+                        <textarea rows="3" id="description" placeholder="description...">{{ this.description }}</textarea>
+                        <input type="text" value="{{ this.price }}" id="price" placeholder="$9.95" />
+                        <sp></sp>
+                        <div class="row-fluid">
+                            <div class="span2">Healthy</div>
+                            <div class="span8"></div>
+                            <div class="span2">Greesy</div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span12"><input id="health" type="range"  min="0" max="100" value="{{ this.health }}" /></div>
+                        </div>
+                        <sp></sp>
+                        <div class="row-fluid">
+                            <div class="span3">
+                                Gluten free <input id="gluten-free" type="checkbox" {{#if this.ingredients.gluten_free}}checked{{/if}}>
+                            </div>
+                            <div class="span3">
+                                Dairy free <input id="dairy-free" type="checkbox" {{#if this.ingredients.dairy_free}}checked{{/if}}>
+                            </div>
+                            <div class="span3">
+                                Peanut free <input id="peanut-free" type="checkbox" {{#if this.ingredients.peanut_free}}checked{{/if}}>
+                            </div>
+                            <div class="span3">
+                                Meat free <input id="meat-free" type="checkbox" {{#if this.ingredients.meat_free}}checked{{/if}}>
+                            </div>
+                        </div>
+                        <sp></sp>
+                        <br>
+                        <div class="row-fluid">
+                            <button id="save-meal" class="span8 btn">save</button>
+                            <button class="delete-meal span4 btn btn-danger">delete</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</script>
+
 
 
 {% endraw %}

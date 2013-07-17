@@ -626,8 +626,8 @@
     SP.meal = function(){}
     /********************************/
 
-    SP.meal.fetchForRestaurant = function(restaurant, callback) {
-        SP.client.GET("/meal", {"restaurant":id}, function(err, data){
+    SP.meal.fetchForRestaurant = function(rest_id, callback) {
+        SP.client.GET("/meal", { "restaurant" : rest_id }, function(err, data){
             if (!err) {
                 if (callback) callback(null, data.meals);
             } else {
@@ -932,7 +932,7 @@
             trace("SP.client ERROR: "+SP.client.url(endpoint)+" - "+this.statusText,true); // damn, something went wrong. tell me about it
             var text = this.responseText;
             var err = null;
-            if (text.length) err = JSON.parse(this.responseText);
+            if (text && text.length) err = JSON.parse(text);
             if (!err) err = { error: "Server error", message: "Something went wrong" };
             if (this.callback) this.callback.call(this, err);
         };

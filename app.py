@@ -1,6 +1,6 @@
 import os
 from flask import Flask, render_template, jsonify, request, redirect
-import json, os, logging, random, string
+import json, os, logging, random, string, gzip, StringIO
 
 app = Flask(__name__)
 
@@ -51,6 +51,29 @@ def add_header(response):
         response = _cache(True,response,"31536000")
     else:
         response = _cache(False,response)
+
+    return response
+
+@app.after_request
+def gzip_response(response):
+    
+    response.direct_passthrough = False
+
+    accept_encoding = request.headers.get('Accept-Encoding', '')
+
+    if 'gzip' not in accept_encoding.lower():
+        return response
+
+    if (200 > response.status_code >= 300) or len(response.data) < 500 or 'Content-Encoding' in response.headers:
+        return response
+
+    gzip_buffer = StringIO.StringIO()
+    gzip_file = gzip.GzipFile(mode='wb', compresslevel=6, fileobj=gzip_buffer)
+    gzip_file.write(response.data)
+    gzip_file.close()
+    response.data = gzip_buffer.getvalue()
+    response.headers['Content-Encoding'] = 'gzip'
+    response.headers['Content-Length'] = len(response.data)
 
     return response
 
