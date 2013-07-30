@@ -20,14 +20,14 @@ body {
   text-align: center; }
 
 .logo-banner {
-  height: 375px;
+  height: 450px;
   background-image: url("/static/img/header.png");
   background-size: 100% 100%; }
 
 .logo-banner div {
   text-align: center;
-  padding-top: 275px;
-  font-size: 1.6em;
+  padding-top: 330px;
+  font-size: 2.0em;
   color: white; }
 
 .text-form {
@@ -109,7 +109,7 @@ body {
   font-weight: 900; }
 
 .food-shots {
-  width: 960px;
+  width: 1200px;
   overflow: hidden; }
 
 .food-shots .floating-text {
@@ -131,7 +131,7 @@ body {
 
 .food-shots .floating-dots {
   margin-top: 530px;
-  margin-left: 412.5px;
+  margin-left: 532.5px;
   position: absolute;
   width: 135px; }
 
@@ -148,7 +148,7 @@ body {
   color: #00c470; }
 
 .food-slider {
-  width: 5760px;
+  width: 7200px;
   -moz-transition: all 1s;
   -webkit-transition: all 1s;
   -o-transition: all 1s;
@@ -158,7 +158,7 @@ body {
   background-size: 100% 100%;
   height: 580px;
   float: left;
-  width: 960px; }
+  width: 1200px; }
 
 .fresh-rolls {
   background-image: url("/static/img/slider1.png"); }

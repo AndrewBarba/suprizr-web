@@ -26,14 +26,14 @@ body {
   text-align: center; }
 
 .logo-banner {
-    height:375px;
+    height:450px;
     background-image: url('/static/img/header.png');
     background-size:100% 100%;
 }
 .logo-banner div {
     text-align:center;
-    padding-top:275px;
-    font-size:1.6em;  
+    padding-top:330px;
+    font-size:2.0em;  
     color:white;
 }
 .text-form {
@@ -116,8 +116,9 @@ $processStepSpacing:17px;
     font-size:3em;
     font-weight:900;
 }
+$slideWidth:1200px;
 .food-shots {
-    width:960px;
+    width:$slideWidth;
     overflow:hidden;
 }
 .food-shots .floating-text {
@@ -140,7 +141,7 @@ $processStepSpacing:17px;
 .food-shots .floating-dots {
     $width:135px;
     margin-top:530px;
-    margin-left:(960px/2) - ($width/2);
+    margin-left:($slideWidth/2) - ($width/2);
     position:absolute;
     width:$width;
 }
@@ -157,7 +158,7 @@ $processStepSpacing:17px;
     color:$lightMain;
 }
 .food-slider {
-    width:5760px;
+    width:($slideWidth*6);
     -moz-transition:all 1s;
     -webkit-transition:all 1s;
     -o-transition:all 1s;
@@ -167,7 +168,7 @@ $processStepSpacing:17px;
     background-size:100% 100%;
     height:580px;
     float:left;
-    width:960px;
+    width:$slideWidth;
 }
 .fresh-rolls {
     background-image:url('/static/img/slider1.png');

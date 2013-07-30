@@ -103,6 +103,7 @@
         <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
         <script type="text/javascript">
             var Suprizr = {};
+            Suprizr.slideWidth = 1200;
             Suprizr.fx = {};
             Suprizr.fx.animateScroll = function() {
                 $('body').animate({ scrollTop: 0 }, "slow");
@@ -110,17 +111,17 @@
             Suprizr.fx.animateFoodSlider = function() {
                 var foodSlider = $('.food-slider'), 
                     currentLeftMargin = parseInt(foodSlider.css('margin-left')),
-                    maxLeftMargin = (parseInt(foodSlider.css('width')) - 960) * -1,
+                    maxLeftMargin = (parseInt(foodSlider.css('width')) - Suprizr.slideWidth) * -1,
                     dots = $('.floating-dots li'),
                     activeDotIndex;
 
                 $('li.active').removeClass('active');
                 
                 if (currentLeftMargin != maxLeftMargin) {
-                    nextLeftMargin = currentLeftMargin - 960;
+                    nextLeftMargin = currentLeftMargin - Suprizr.slideWidth;
 
                     foodSlider.css('margin-left', nextLeftMargin + 'px');
-                    activeDotIndex = nextLeftMargin / -960;
+                    activeDotIndex = nextLeftMargin / -Suprizr.slideWidth;
                     $(dots[activeDotIndex]).addClass('active');
                 }
                 else {
