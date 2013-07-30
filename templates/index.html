@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Suprizr - Gourmet Roulette for the Foodie Who Can't Decide</title>
+
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+        <link href="/static/css/desktop.css?v={{version}}" rel="stylesheet" type="text/css" media="all">
+    </head>
+    <body>
+        <div class="container">
+            <div class="row logo-banner">
+                <div class="span12">
+                    Gourmet Roulette for the Foodie Who Can't Decide
+                </div>
+            </div>
+            <div class="row text-form">
+                <form action="http://suprizr.us7.list-manage1.com/subscribe/post?u=abb45cf4f4cb862cb2ea71c88&amp;id=cbac486850" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                <div class="span12">
+                    <span>Get in on the action</span>
+                </div>
+                <div class="span6 align-right">
+                    <input type="text" name="EMAIL" id="mce-EMAIL" format="email" placeholder="hungry@gmail.com" required>
+                </div>
+                <div class="span6 align-left">
+                    <a class="btn" href="#" name="subscribe" id="mc-embedded-subscribe" >I'm in!</a>
+                </div>    
+                </form>
+            </div>
+            <div class="row marketing">
+                <div class="span12">
+                    <div class="marketing-text">
+                        <div class="questions">hungry? busy? like suprises?</div>
+                        <div class="app-description">Welcome to the ultimate delivery app! We'll pick out something delicious & deliver it in under an hour.</div>
+                    </div>
+                    <div class="marketing-shots">
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
+            <div class="row process-steps">
+                <div class="span4 process-step">
+                    <div class="process-step-number">1</div>
+                    <div class="process-step-description">Enter your Address</div>
+                    <div class="process-step-image">
+                        <span class="linecons">&#xe012;</span>
+                    </div>
+                </div>
+                <div class="span4 process-step">
+                    <div class="process-step-number">2</div> 
+                    <div class="process-step-description">Mention any Allergies</div>
+                    <div class="process-step-image">
+                        <span class="linecons">&#xe01f;</span>
+                    </div>
+                </div>
+                <div class="span4 process-step">
+                    <div class="process-step-number">3</div> 
+                    <div class="process-step-description">Meal Delivered in an Hour</div>
+                    <div class="process-step-image">
+                        <span class="linecons">&#xe026;</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row food-shots">
+                <div class="floating-text">
+                    <h1>Lunch $15</h1>
+                    <h1>Dinner $20</h1>
+                    <h2>you'll always get something great, and you might get something worth $50</h2>
+                </div>
+                <div class="floating-dots">
+                    <ul>
+                        <li class="active">&#149;</li>
+                        <li>&#149;</li>
+                        <li>&#149;</li>
+                        <li>&#149;</li>
+                        <li>&#149;</li>
+                        <li>&#149;</li>
+                    </ul>
+                </div>
+                <div class="food-slider">
+                    <div class="slide fresh-rolls"></div>
+                    <div class="slide sandwich"></div>
+                    <div class="slide salad"></div>
+                    <div class="slide falafel"></div> 
+                    <div class="slide couscous"></div> 
+                    <div class="slide shrimp"></div>
+                </div>
+            </div>
+            <div class="row footer">
+                <div class="span6 footer-signature">
+                    <div class="url"><a href="//beta.suprizr.com">beta.suprizr.com</a></div>
+                    <div class="currently-serving">Currently serving San Francisco</div>
+                </div>
+                <div class="span6 footer-links">
+                    <ul>
+                        <li><a href="mailto:feedback@suprizr.com">Contact</a></li>
+                        <li><a href="http://instagram.com/suprizr">Instagram</a></li>
+                        <li><a href="#" id="back-to-top">Back to Top</a></li>
+                    </ul> 
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            var Suprizr = {};
+            Suprizr.fx = {};
+            Suprizr.fx.animateScroll = function() {
+                $('body').animate({ scrollTop: 0 }, "slow");
+            };
+            Suprizr.fx.animateFoodSlider = function() {
+                var foodSlider = $('.food-slider'), 
+                    currentLeftMargin = parseInt(foodSlider.css('margin-left')),
+                    maxLeftMargin = (parseInt(foodSlider.css('width')) - 960) * -1,
+                    dots = $('.floating-dots li'),
+                    activeDotIndex;
+
+                $('li.active').removeClass('active');
+                
+                if (currentLeftMargin != maxLeftMargin) {
+                    nextLeftMargin = currentLeftMargin - 960;
+
+                    foodSlider.css('margin-left', nextLeftMargin + 'px');
+                    activeDotIndex = nextLeftMargin / -960;
+                    $(dots[activeDotIndex]).addClass('active');
+                }
+                else {
+                    foodSlider.css('margin-left', '0px');
+                    $(dots[0]).addClass('active');
+                }
+            };
+            $('#mce-EMAIL').bind('click', function(e) {
+                $(e.target).parents('form').submit(); 
+            });
+
+            $('#back-to-top').bind('click', Suprizr.fx.animateScroll);
+            $('[placeholder]').focus(function() {
+              var input = $(this);
+              if (input.val() == input.attr('placeholder')) {
+                input.val('');
+                input.removeClass('placeholder');
+              }
+            }).blur(function() {
+              var input = $(this);
+              if (input.val() == '' || input.val() == input.attr('placeholder')) {
+                input.addClass('placeholder');
+                input.val(input.attr('placeholder'));
+              }
+            }).blur()
+
+            window.setInterval(Suprizr.fx.animateFoodSlider, 3000); 
+
+        </script>
+    </body>
+</html>

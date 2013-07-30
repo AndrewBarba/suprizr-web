@@ -1,0 +1,222 @@
+$lightMain: rgb(0, 196, 112);
+$darkMain: rgb(0, 152, 78);
+$brown: rgb(46, 41, 48);
+
+@font-face {
+  font-family: 'LatoLight';
+  src: url("/static/css/fonts/Lato-Lig.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "linecons";
+  src: url("fonts/linecons.eot");
+  src: url("fonts/Flat-UI-Icons-16.eot?#iefix") format("embedded-opentype"), url("fonts/linecons.woff") format("woff"), url("fonts/linecons.ttf") format("truetype"), url("fonts/linecons.svg") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+    background-color:#ccc;
+    font-family:"LatoLight";
+}
+.linecons {
+  color: $darkMain;
+  font-family: "linecons";
+  padding-left: 8px;
+  text-align: center; }
+
+.logo-banner {
+    height:375px;
+    background-image: url('/static/img/header.png');
+    background-size:100% 100%;
+}
+.logo-banner div {
+    text-align:center;
+    padding-top:275px;
+    font-size:1.6em;  
+    color:white;
+}
+.text-form {
+    background-color: $brown;
+    text-align:center;
+    color:white;
+}
+.text-form .align-right {
+    text-align:right;
+}
+.text-form .align-left {
+    margin-left:0;
+    text-align:left;
+
+}
+.text-form div {
+    margin-top:10px;
+}
+.text-form input[type="text"] {
+    text-align:center;
+    padding-top:3px;
+    padding-bottom:3px;
+    width:120px;
+}
+.text-form a {
+    color:white;
+    margin-left:50px;
+}
+.text-form a:hover {
+    text-decoration:none;
+}
+.text-form a.btn {
+    background-color:rgb(50, 168, 235);
+    background-image:none;
+    border:none;
+    text-shadow:none;
+}
+.text-form a.btn:hover {
+    color:white;
+}
+.marketing {
+    background-color:white;
+    padding-top:20px;
+    padding-bottom:40px;
+}
+.marketing-text {
+    color: $darkMain;
+    text-align:center;
+}
+.marketing-text div {
+    margin-top:10px;
+}
+.marketing-text .questions {
+    font-size:1.6em;
+    font-weight:900;
+}
+.marketing-shots {
+    background-image: url('/static/img/iPhones.png');
+    background-size:cover;
+    margin:0 auto;
+    margin-top:15px;
+    height:390px;
+    width:619px;
+}
+.process-steps {
+    background-color:$lightMain;
+}
+$processStepSpacing:17px;
+.process-step {
+    color: white;
+    padding-top:$processStepSpacing;
+    padding-bottom:$processStepSpacing;
+    text-align:center;
+}
+.process-step div {
+    margin-top:$processStepSpacing;
+    margin-bottom:$processStepSpacing;
+}
+.process-step-number, .process-step-image {
+    font-size:3em;
+    font-weight:900;
+}
+.food-shots {
+    width:960px;
+    overflow:hidden;
+}
+.food-shots .floating-text {
+    color:white;
+    position:absolute;
+    margin-top:205px;
+    margin-left:110px;
+}
+.food-shots h1 {
+    font-size:1.5em;
+    line-height:1.5em;
+    margin-top:0;
+    margin-bottom:0;
+}
+.food-shots h2 {
+    font-size:.9em;
+    line-height:1.5em;
+    width:240px;
+}
+.food-shots .floating-dots {
+    $width:135px;
+    margin-top:530px;
+    margin-left:(960px/2) - ($width/2);
+    position:absolute;
+    width:$width;
+}
+.food-shots ul {
+    list-style-type:none;
+}
+.food-shots li {
+    color:white;
+    float:left;
+    font-size:1.7em;
+    margin-right:3px;
+}
+.food-shots li.active {
+    color:$lightMain;
+}
+.food-slider {
+    width:5760px;
+    -moz-transition:all 1s;
+    -webkit-transition:all 1s;
+    -o-transition:all 1s;
+    transition:all 1s;
+}
+.food-slider .slide {
+    background-size:100% 100%;
+    height:580px;
+    float:left;
+    width:960px;
+}
+.fresh-rolls {
+    background-image:url('/static/img/slider1.png');
+}
+.sandwich {
+    background-image:url('/static/img/slider2.png');
+}
+.salad {
+    background-image:url('/static/img/slider3.png');
+}
+.falafel {
+    background-image:url('/static/img/slider4.png');
+}
+.couscous {
+    background-image:url('/static/img/slider5.png');
+}
+.shrimp {
+    background-image:url('/static/img/slider6.png');
+}
+.footer {
+    background-color:$brown;
+    height:160px;
+    padding-top:120px;
+}
+.footer .span6 div, .footer .span6 ul{
+    padding-left:50px;
+}
+.footer a {
+    color:$lightMain;
+    text-decoration:none;
+}
+.footer a:hover {
+    text-decoration:none;
+}
+.footer .url {
+    font-size:1.7em;
+}
+.footer .currently-serving {
+    color:white;
+}
+.footer ul {
+    list-style-type:none;
+}
+.footer ul li {
+    float:left;
+    border-right:1px solid $lightMain;
+    margin-right:5px;
+    padding-right:10px;
+}
+.footer ul li:last-child {
+    border-right:none;
+}

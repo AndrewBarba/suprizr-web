@@ -14,6 +14,10 @@ def render(temp):
 def hello():
     return 'Hello Suprizr!'
 
+@app.route('/a')
+def index():
+    return render("index.html")
+
 @app.route('/admin', defaults={'path': ''})
 @app.route('/admin/<path:path>')
 def admin(path=None):
