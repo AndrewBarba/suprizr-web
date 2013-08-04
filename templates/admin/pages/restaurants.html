@@ -53,8 +53,8 @@
 										<div class="span6">
 											Dairy free <input id="dairy-free" type="checkbox">
 										</div>
-										<br>
 									</div>
+									<br><br>
 									<div class="row-fluid">
 										<div class="span6">
 											Peanut free <input id="peanut-free" type="checkbox">
@@ -62,8 +62,8 @@
 										<div class="span6">
 											Meat free <input id="meat-free" type="checkbox">
 										</div>
-										<br>
 									</div>
+									<br><br>
 									<div class="row-fluid">
 										<div class="span6">
 											Vegan <input id="is-vegan" type="checkbox">
@@ -268,6 +268,7 @@ $(function(){
 		var peanut = $("#peanut-free",form).is(":checked");
 		var dairy = $("#dairy-free",form).is(":checked");
 		var meat = $("#meat-free",form).is(":checked");
+		var vegan = $("#is-vegan",form).is(":checked");
 
 		var data = {
 			"name" : name,
@@ -279,7 +280,8 @@ $(function(){
 				"gluten_free" : gluten,
 				"dairy_free" : dairy,
 				"peanut_free" : peanut,
-				"meat_free" : meat
+				"meat_free" : meat,
+				"vegan" : vegan
 			}
 
 		};
