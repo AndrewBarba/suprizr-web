@@ -11,8 +11,12 @@ def render(temp):
 	return render_template(temp, version=os.environ.get('REL',random_string()))
 
 @app.route('/')
-def hello():
-    return 'Hello Suprizr!'
+def index():
+    return render("index.html")
+
+@app.route('/fav-meal')
+def contest():
+    return render("contest.html")
 
 @app.route('/admin', defaults={'path': ''})
 @app.route('/admin/<path:path>')
