@@ -45,6 +45,7 @@
 
 				<input id="lat" type="hidden">
 				<input id="lon" type="hidden">
+				<input id="reference" type="hidden">
 
 				<!-- <div id="google-results"></div> -->
 			</fieldset>
@@ -84,6 +85,7 @@ $(function(){
 		$("input#address",scope).val($(this).data("address"));
 		$("input#lat",scope).val($(this).data("lat"));
 		$("input#lon",scope).val($(this).data("lon"));
+		$("input#reference",scope).val($(this).data("reference"));
 	},".google-restaurant");
 
 	var _loading = false;
@@ -101,7 +103,9 @@ $(function(){
 		var address = $("input#address",scope).val().trim();
 		var lat = $("input#lat",scope).val();
 		var lon = $("input#lon",scope).val();
+		var ref = $("input#reference",scope).val();
 		var data = {
+			"google_reference" : ref,
 			"name" : name,
 			"description" : desc,
 			"delivery_fee" : fee,
