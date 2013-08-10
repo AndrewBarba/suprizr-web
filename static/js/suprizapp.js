@@ -318,3 +318,24 @@ $(function(){
     },".event");
 
 });
+
+/************ HANDLEBARS *****************/
+/*****************************************/
+
+Handlebars.registerHelper("googleLat", function(place){
+    return place.geometry.location.lat();
+});
+
+Handlebars.registerHelper("googleLon", function(place){
+    return place.geometry.location.lng();
+});
+
+
+
+
+
+
+
+
+
+
