@@ -585,6 +585,88 @@
         SP.event.post("SP.auth.changed",$SP_AUTH);
     }
 
+    /************* ORDERS ************/
+    SP.order = function(){}
+    /*********************************/
+
+    /**
+     * Fetches a single order with all info populated
+     */
+    SP.order.fetch = function(oid, callback) {
+        SP.client.GET("/order/"+oid,{},function(err, order){
+            if (!err) {
+                if (callback) callback(null, order);
+            } else {
+                if (callback) callback(err);
+            }
+        });
+    }
+
+    /**
+     * Fetches a list of all open orders
+     * Must be an admin to use this
+     */
+    SP.order.fetchOpenOrders = function(callback) {
+        SP.client.GET("/order", {}, function(err, data){
+            if (!err) {
+                if (callback) callback(null, data.orders);
+            } else {
+                if (callback) callback(err);
+            }
+        });
+    }
+
+    /**
+     * Completes and order with the given description
+     * time is the time in minutes that the order will be delivered
+     * Must be an admin to call this
+     */
+    SP.order.completeOrder = function(oid, description, time, callback) {
+        var data = {
+            "description" : description,
+            "delivery_time" : time
+        };
+        SP.client.PUT("/order/"+oid+"/complete", data, function(err, order){
+            if (!err) {
+                if (callback) callback(null, order);
+            } else {
+                if (callback) callback(err);
+            }
+        });
+    }
+
+    /**
+     * Provides a user with an update about their order.
+     * Does not charge their credit card, does not indicate the order has been placed
+     * status - "open", "delayed", "ordered", "delivered", "canceled", "refunded"
+     */
+    SP.order.updateOrder = function(oid, description, status, callback) {
+        var data = {
+            "description" : description,
+            "order_status" : status
+        };
+        SP.client.PUT("/order/"+oid, data, function(err, order){
+            if (!err) {
+                if (callback) callback(null, order);
+            } else {
+                if (callback) callback(err);
+            }
+        });
+    }
+
+    /**
+     * Cacnels/Refunds an order. Must be an admin to use this
+     */
+    SP.order.cacnelOrder = function(oid, callback) {
+        SP.client.DELETE("/order/"+oid, {}, function(err, order){
+            if (!err) {
+                if (callback) callback(null, order);
+            } else {
+                if (callback) callback(err);
+            }
+        });
+    }
+
     /************** RESTAURANT ************/
     SP.restaurant = function(){}
     /**************************************/
